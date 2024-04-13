@@ -30,15 +30,23 @@ public:
         int ans = 0;
         for(int i=0;i<matrix.size();i++){
             stack<int>st;
-            for(int j=0;j<=matrix[0].size();j++){
+            for(int j=0;j<matrix[0].size();j++){
                 
-                while(st.size() && (j==n || matrix[i][j]<=matrix[i][st.top()])){
+                while(st.size() && (matrix[i][j]<=matrix[i][st.top()])){
                     int height = matrix[i][st.top()];
                     st.pop();
                     int width = st.size()?j-st.top()-1:j;
                     ans = max(ans,width*height);
                 }
                 st.push(j);
+                int temp=j+1;
+                while(temp == n && st.size()){
+
+                    int height = matrix[i][st.top()];
+                    st.pop();
+                    ans = max(ans,height*(st.size()?temp-st.top()-1:temp));
+                }
+
                 
             } 
         }
